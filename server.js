@@ -2,6 +2,8 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const database = require("./src/config/database");
+const authRoute = require("./src/routes/auth");
+const bookRoute = require("./src/routes/book");
 
 dotenv.config();
 
@@ -16,6 +18,9 @@ app.get("/", (req, res) =>
     message: "server is running successful",
   })
 );
+
+app.use("/api/auth", authRoute);
+app.use("/api/books", bookRoute);
 
 const PORT = process.env.PORT || 6000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
