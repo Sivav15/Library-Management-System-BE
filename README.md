@@ -38,7 +38,7 @@ This guide will help you set up and run the Library Management System backend lo
    S3_BUCKET=
    ```
 
-### Installation
+### Running the Project
 
 1. **Start the server:**
 
