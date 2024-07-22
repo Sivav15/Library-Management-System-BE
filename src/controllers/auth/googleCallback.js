@@ -4,8 +4,10 @@ const userModel = require("../../models/user");
 
 const googleCallback = async (req, res) => {
   try {
-    const { token, role } = req.body;
+    const { token, role, action } = req.body;
+    console.log("action", action);
 
+    // Fetch user info from Google
     const { data } = await axios.get(
       `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${token}`
     );
@@ -13,7 +15,15 @@ const googleCallback = async (req, res) => {
 
     let user = await userModel.findOne({ email });
 
-    if (!user) {
+    if (action === "register") {
+      if (user) {
+        return res.status(409).json({ message: "User already exists" });
+      }
+      if (!role) {
+        return res
+          .status(400)
+          .json({ message: "Role is required for registration" });
+      }
       user = new userModel({
         googleId: sub,
         firstName: name,
@@ -23,6 +33,10 @@ const googleCallback = async (req, res) => {
         role,
       });
       await user.save();
+    } else if (action === "login") {
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
     }
 
     const jwtToken = jwt.sign(
@@ -32,7 +46,7 @@ const googleCallback = async (req, res) => {
     );
 
     res.status(200).json({
-      message: "Login successfully",
+      message: "Success",
       token: jwtToken,
       id: user._id,
       avatar: user.avatar,
