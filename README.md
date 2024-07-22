@@ -46,13 +46,7 @@ This guide will help you set up and run the Library Management System backend lo
    npm start
    ```
 
-2. **Start the server:**
-
-   ```bash
-   npm start
-   ```
-
-3. **Verify the server is running:**
+2. **Verify the server is running:**
 
    ```bash
    Open your browser or use a tool like curl or Postman to make a request to http://localhost:4000 (or the port specified) to ensure the server is up and running.
