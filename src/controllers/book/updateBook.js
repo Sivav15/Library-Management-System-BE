@@ -1,14 +1,18 @@
-const bookModel = require("../../models/Book");
+const bookModel = require("../../models/book");
 
 const updateBook = async (req, res) => {
   try {
-    const { id, title, author, img, borrowedBy } = req.body;
-
+    const { title, author } = req.body;
+    const { id } = req.params;
+    // console.log(id);
+    console.log(title, author);
     const updatedBook = await bookModel.findByIdAndUpdate(
       id,
-      { title, author, img, borrowedBy },
+      { title, author },
       { new: true, runValidators: true }
     );
+
+    console.log(updatedBook);
 
     if (!updatedBook) {
       return res.status(404).json({
@@ -23,6 +27,7 @@ const updateBook = async (req, res) => {
       book: updatedBook,
     });
   } catch (err) {
+    console.log(err);
     res.status(500).json({
       success: false,
       message: "Internal Server Error",

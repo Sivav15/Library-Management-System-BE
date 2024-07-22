@@ -1,8 +1,8 @@
-const Book = require("../../models/Book");
+const Book = require("../../models/book");
 
 const deleteBook = async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.params;
 
     const deletedBook = await Book.findByIdAndDelete(id);
 

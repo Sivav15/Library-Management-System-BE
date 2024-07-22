@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const capitalizeFirstLetter = require("../../utils/capitalizeFirstLetter");
 
 const register = async (req, res) => {
-  const { firstName, lastName, email, password } = req.body;
+  const { firstName, lastName, email, password, role } = req.body;
 
   try {
     const user = await userModel.findOne({ email });
@@ -17,6 +17,7 @@ const register = async (req, res) => {
       email,
       emailVerified: true,
       password: hashedPassword,
+      role,
       avatar: `https://ui-avatars.com/api/?name=${firstName[0]}`,
     });
 
@@ -43,6 +44,7 @@ const register = async (req, res) => {
       email: newUser.email,
       firstName: newUser.firstName,
       lastName: newUser.lastName,
+      role,
     });
   } catch (err) {
     console.log(err);

@@ -6,7 +6,7 @@ const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await user.findOne({ email });
+    const user = await userModel.findOne({ email });
     if (!user)
       return res.status(404).json({
         message: "User does not exist",
@@ -36,6 +36,7 @@ const login = async (req, res) => {
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
+      role: user.role,
     });
   } catch (err) {
     console.log(err);
